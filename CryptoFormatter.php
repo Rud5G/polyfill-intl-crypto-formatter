@@ -245,7 +245,7 @@ class CryptoFormatter
      * @throws BadMethodCallException When the $style is not supported
      * @throws BadMethodCallException      When the pattern value is different than null
      */
-    public function __construct(?string $locale = 'en', int $style = null, string $pattern = null)
+    public function __construct(?string $locale = 'en', int $style = self::CURRENCY, string $pattern = null)
     {
         if ('en' !== $locale && null !== $locale) {
             throw new InvalidArgumentException('Only the locale "en" is supported', E_USER_ERROR);
