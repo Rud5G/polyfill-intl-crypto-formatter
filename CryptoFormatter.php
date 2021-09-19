@@ -26,15 +26,7 @@ use const PHP_VERSION_ID;
  *  - {@link __construct}
  *  - {@link create}
  *  - {@link formatCurrency}
- *  - {@link format}
- *  - {@link getAttribute}
- *  - {@link getErrorCode}
- *  - {@link getErrorMessage}
- *  - {@link getLocale}
- *  - {@link parse}
- *  - {@link setAttribute}
  *
- * @internal
  */
 class CryptoFormatter
 {
