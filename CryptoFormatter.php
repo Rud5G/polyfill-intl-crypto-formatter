@@ -251,8 +251,9 @@ class CryptoFormatter
             throw new InvalidArgumentException('Only the locale "en" is supported', E_USER_ERROR);
         }
 
+        $style = $style ?? self::CURRENCY;
         if (!in_array($style, self::$supportedStyles)) {
-            $message = sprintf('The available styles are: %s.', implode(', ', array_keys(self::$supportedStyles)));
+            $message = sprintf('The available styles are: %s. not argument: %s', implode(', ', array_keys(self::$supportedStyles)), $style);
             throw new BadMethodCallException($message, E_USER_ERROR);
         }
 
@@ -285,7 +286,7 @@ class CryptoFormatter
      * @throws BadMethodCallException When the $style is not supported
      * @throws BadMethodCallException      When the pattern value is different than null
      */
-    public static function create(?string $locale = 'en', int $style = null, string $pattern = null)
+    public static function create(?string $locale = 'en', ?int $style = self::CURRENCY, ?string $pattern = null)
     {
         return new static($locale, $style, $pattern);
     }
