@@ -230,10 +230,10 @@ class CryptoFormatter
 
     /**
      * @param string|null $locale  The locale code. The only currently supported locale is "en" (or null using the default locale, i.e. "en")
-     * @param int         $style   Style of the formatting, one of the format style constants.
+     * @param int|null    $style   Style of the formatting, one of the format style constants.
      *                             The only supported styles are NumberFormatter::DECIMAL
      *                             and NumberFormatter::CURRENCY.
-     * @param string      $pattern Not supported. A pattern string in case $style is NumberFormat::PATTERN_DECIMAL or
+     * @param string|null $pattern Not supported. A pattern string in case $style is NumberFormat::PATTERN_DECIMAL or
      *                             NumberFormat::PATTERN_RULEBASED. It must conform to  the syntax
      *                             described in the ICU DecimalFormat or ICU RuleBasedNumberFormat documentation
      *
@@ -245,7 +245,7 @@ class CryptoFormatter
      * @throws BadMethodCallException When the $style is not supported
      * @throws BadMethodCallException      When the pattern value is different than null
      */
-    public function __construct(?string $locale = 'en', int $style = self::CURRENCY, string $pattern = null)
+    public function __construct(?string $locale = 'en', ?int $style = self::CURRENCY, ?string $pattern = null)
     {
         if ('en' !== $locale && null !== $locale) {
             throw new InvalidArgumentException('Only the locale "en" is supported', E_USER_ERROR);
