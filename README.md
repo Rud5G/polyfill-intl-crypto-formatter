@@ -13,7 +13,7 @@ This library is released under the [MIT license](LICENSE).
 ## Add repository
 
 ```bash
-composer config repositories.polyfill-intl-crypto vcs https://github.com/Rud5G/polyfill-intl-crypto
+composer config repositories.polyfill-intl-crypto-formatter vcs https://github.com/Rud5G/polyfill-intl-crypto-formatter
 ```
 
 ## Install package
