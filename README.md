@@ -19,6 +19,6 @@ composer config repositories.polyfill-intl-crypto-formatter vcs https://github.c
 ## Install package
 
 ```bash
-composer require tnetdev/polyfill-intl-crypto
+composer require tnetdev/polyfill-intl-crypto-formatter
 ```
 
