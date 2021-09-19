@@ -1,5 +1,5 @@
 {
-    "name": "tnetdev/polyfill-intl-crypto",
+    "name": "tnetdev/polyfill-intl-crypto-formatter",
     "type": "library",
     "description": "CurrencyFormatter for cryptocurrencies",
     "license": "MIT",
