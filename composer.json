@@ -1,0 +1,26 @@
+{
+    "name": "tnetdev/polyfill-intl-crypto",
+    "type": "library",
+    "description": "CurrencyFormatter for cryptocurrencies",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rudger Gravestein",
+            "email": "r.gravestein@triple-networks.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.3",
+        "ext-mbstring": "*",
+        "symfony/polyfill-intl-icu": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "Symfony\\Polyfill\\Intl\\Crypto\\": ""
+        }
+    },
+    "minimum-stability": "dev",
+    "suggest": {
+        "ext-intl": "For best performance and support of other locales than \"en\""
+    }
+}
