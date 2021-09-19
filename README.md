@@ -28,3 +28,35 @@ composer config repositories.polyfill-intl-crypto-formatter vcs https://github.c
 composer require tnetdev/polyfill-intl-crypto-formatter
 ```
 
+## Example code
+
+```php
+use TnetDev\Polyfill\Intl\Crypto\CryptoFormatter;
+use Twig\Error\RuntimeError;
+
+/**
+ * Example function formatCrypto
+ * 
+ * @param float $amount
+ * @param string $currency
+ * @return string
+ * @throws RuntimeError
+ */
+function formatCrypto(float $amount, string $currency): string
+{
+    $formatter = CryptoFormatter::create();
+    $floatAmount = $formatter->parse($amount);
+    if (false === $ret = $formatter->formatCurrency($floatAmount, $currency)) {
+        throw new RuntimeError('Unable to format the given number as a currency.');
+    }
+
+    return $ret;
+}
+
+
+$amount = (float)551684.50;
+$currency = 'XXBT';
+
+echo formatCrypto($amount, $currency);
+
+```

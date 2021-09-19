@@ -9,19 +9,23 @@
             "email": "r.gravestein@triple-networks.com"
         }
     ],
+    "minimum-stability": "dev",
     "require": {
-        "php": ">=7.3"
+        "php": ">=7.3",
+        "ext-mbstring": "*",
+        "twig/twig": "^2.4|^3.0"
     },
     "require-dev": {
-        "ext-mbstring": "*",
-        "symfony/polyfill-intl-icu": "dev-main"
+        "symfony/polyfill-intl-icu": "dev-main",
+        "symfony/intl": "^4.4|^5.0|^6.0",
+        "symfony/phpunit-bridge": "6.0.x-dev",
+        "symfony/var-dumper": "^4.4|^5.1|^6.0"
     },
     "autoload": {
         "psr-4": {
             "TnetDev\\Polyfill\\Intl\\Crypto\\": ""
         }
     },
-    "minimum-stability": "dev",
     "suggest": {
         "ext-intl": "For best performance and support of other locales than \"en\""
     }
