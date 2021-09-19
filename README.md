@@ -4,8 +4,13 @@ TnetDev Intl Crypto: Number/CurrencyFormatter for CryptoCurrencies
 This package adds crypto currencies to the currency formatter.
 It is limited to the "en" locale and to:
 
+see:
+
 - [`NumberFormatter`](https://php.net/NumberFormatter)
 - [`NumberFormatter::formatCurrency`](https://php.net/manual/numberformatter.formatcurrency.php)
+
+method:
+- [CryptoFormatter::formatCurrency](./CryptoFormatter.php#L309)
 
 ## License
 
