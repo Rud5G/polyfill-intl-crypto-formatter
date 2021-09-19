@@ -10,7 +10,9 @@
         }
     ],
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.3"
+    },
+    "require-dev": {
         "ext-mbstring": "*",
         "symfony/polyfill-intl-icu": "dev-main"
     },
