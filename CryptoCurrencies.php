@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Polyfill\Intl\Crypto;
+namespace TnetDev\Polyfill\Intl\Crypto;
 
 
 class CryptoCurrencies

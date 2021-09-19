@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Symfony\\Polyfill\\Intl\\Crypto\\": ""
+            "TnetDev\\Polyfill\\Intl\\Crypto\\": ""
         }
     },
     "minimum-stability": "dev",

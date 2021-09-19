@@ -1,16 +1,12 @@
 <?php
 
-namespace Symfony\Polyfill\Intl\Crypto;
+namespace TnetDev\Polyfill\Intl\Crypto;
 
-//use Symfony\Polyfill\Intl\Icu\Currencies;
-use Symfony\Polyfill\Intl\Crypto\CryptoCurrencies as Currencies;
+use BadMethodCallException;
+use DomainException;
+use InvalidArgumentException;
+use TnetDev\Polyfill\Intl\Crypto\CryptoCurrencies as Currencies;
 
-use Symfony\Polyfill\Intl\Icu\Exception\MethodArgumentNotImplementedException;
-use Symfony\Polyfill\Intl\Icu\Exception\MethodArgumentValueNotImplementedException;
-use Symfony\Polyfill\Intl\Icu\Exception\MethodNotImplementedException;
-use Symfony\Polyfill\Intl\Icu\Exception\NotImplementedException;
-use Symfony\Polyfill\Intl\Icu\Icu;
-use Symfony\Polyfill\Intl\Icu\Locale;
 use ValueError;
 use function array_key_exists;
 use function in_array;
@@ -40,7 +36,7 @@ use const PHP_VERSION_ID;
  *
  * @internal
  */
-abstract class CryptoFormatter
+class CryptoFormatter
 {
     /* Format style constants */
     public const PATTERN_DECIMAL = 0;
@@ -134,7 +130,7 @@ abstract class CryptoFormatter
      *
      * @var int
      */
-    protected $errorCode = Icu::U_ZERO_ERROR;
+    protected $errorCode = 0;
 
     /**
      * The error message from the last operation.
@@ -253,23 +249,24 @@ abstract class CryptoFormatter
      * @see https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classicu_1_1DecimalFormat.html#details
      * @see https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classicu_1_1RuleBasedNumberFormat.html#details
      *
-     * @throws MethodArgumentValueNotImplementedException When $locale different than "en" or null is passed
-     * @throws MethodArgumentValueNotImplementedException When the $style is not supported
-     * @throws MethodArgumentNotImplementedException      When the pattern value is different than null
+     * @throws BadMethodCallException When $locale different than "en" or null is passed
+     * @throws BadMethodCallException When the $style is not supported
+     * @throws BadMethodCallException      When the pattern value is different than null
      */
     public function __construct(?string $locale = 'en', int $style = null, string $pattern = null)
     {
         if ('en' !== $locale && null !== $locale) {
-            throw new MethodArgumentValueNotImplementedException(__METHOD__, 'locale', $locale, 'Only the locale "en" is supported');
+            throw new InvalidArgumentException('Only the locale "en" is supported', E_USER_ERROR);
         }
 
         if (!in_array($style, self::$supportedStyles)) {
             $message = sprintf('The available styles are: %s.', implode(', ', array_keys(self::$supportedStyles)));
-            throw new MethodArgumentValueNotImplementedException(__METHOD__, 'style', $style, $message);
+            throw new BadMethodCallException($message, E_USER_ERROR);
         }
 
         if (null !== $pattern) {
-            throw new MethodArgumentNotImplementedException(__METHOD__, 'pattern');
+            $message = 'Argument: pattern is not supported.';
+            throw new BadMethodCallException($message, E_USER_ERROR);
         }
 
         $this->style = $style;
@@ -292,9 +289,9 @@ abstract class CryptoFormatter
      * @see http://www.icu-project.org/apiref/icu4c/classDecimalFormat.html#_details
      * @see http://www.icu-project.org/apiref/icu4c/classRuleBasedNumberFormat.html#_details
      *
-     * @throws MethodArgumentValueNotImplementedException When $locale different than "en" or null is passed
-     * @throws MethodArgumentValueNotImplementedException When the $style is not supported
-     * @throws MethodArgumentNotImplementedException      When the pattern value is different than null
+     * @throws BadMethodCallException When $locale different than "en" or null is passed
+     * @throws BadMethodCallException When the $style is not supported
+     * @throws BadMethodCallException      When the pattern value is different than null
      */
     public static function create(?string $locale = 'en', int $style = null, string $pattern = null)
     {
@@ -347,8 +344,8 @@ abstract class CryptoFormatter
      *
      * @see https://php.net/numberformatter.format
      *
-     * @throws NotImplementedException                    If the method is called with the class $style 'CURRENCY'
-     * @throws MethodArgumentValueNotImplementedException If the $type is different than TYPE_DEFAULT
+     * @throws DomainException                    If the method is called with the class $style 'CURRENCY'
+     * @throws BadMethodCallException If the $type is different than TYPE_DEFAULT
      */
     public function format($num, int $type = self::TYPE_DEFAULT)
     {
@@ -364,12 +361,12 @@ abstract class CryptoFormatter
         }
 
         if (self::CURRENCY === $this->style) {
-            throw new NotImplementedException(sprintf('"%s()" method does not support the formatting of currencies (instance with CURRENCY style). "%s".', __METHOD__, NotImplementedException::INTL_INSTALL_MESSAGE));
+            throw new DomainException('Issue format: install intl excetions', E_USER_ERROR);
         }
 
         // Only the default type is supported.
         if (self::TYPE_DEFAULT !== $type) {
-            throw new MethodArgumentValueNotImplementedException(__METHOD__, 'type', $type, 'Only TYPE_DEFAULT is supported');
+            throw new BadMethodCallException('Only TYPE_DEFAULT is supported, not: '. $type, E_USER_ERROR);
         }
 
         $fractionDigits = $this->getAttribute(self::FRACTION_DIGITS);
@@ -430,8 +427,10 @@ abstract class CryptoFormatter
      *                returns "en".
      *
      * @see https://php.net/numberformatter.getlocale
+     *
+     * @see Locale::ACTUAL_LOCALE
      */
-    public function getLocale(int $type = Locale::ACTUAL_LOCALE)
+    public function getLocale(int $type = 0)
     {
         return 'en';
     }
@@ -443,11 +442,11 @@ abstract class CryptoFormatter
      *
      * @see https://php.net/numberformatter.getpattern
      *
-     * @throws MethodNotImplementedException
+     * @throws BadMethodCallException
      */
     public function getPattern()
     {
-        throw new MethodNotImplementedException(__METHOD__);
+        throw new BadMethodCallException(__METHOD__);
     }
 
     /**
@@ -481,11 +480,11 @@ abstract class CryptoFormatter
      *
      * @see https://php.net/numberformatter.parsecurrency
      *
-     * @throws MethodNotImplementedException
+     * @throws BadMethodCallException
      */
     public function parseCurrency(string $string, &$currency, &$offset = null)
     {
-        throw new MethodNotImplementedException(__METHOD__);
+        throw new BadMethodCallException(__METHOD__);
     }
 
     /**
@@ -524,11 +523,9 @@ abstract class CryptoFormatter
             $offset = 0;
         }
 
-        if ($error) {
-            Icu::setError(Icu::U_PARSE_ERROR, 'Number parsing failed');
-            $this->errorCode = Icu::getErrorCode();
-            $this->errorMessage = Icu::getErrorMessage();
-
+        if ($error ?? false) {
+            $message = sprintf('%s(): Number: %s parsing failed, type: %s $offset: %s', __METHOD__, $string, $type, $offset);
+            trigger_error($message, E_USER_WARNING);
             return false;
         }
 
@@ -550,8 +547,8 @@ abstract class CryptoFormatter
      *
      * @see https://php.net/numberformatter.setattribute
      *
-     * @throws MethodArgumentValueNotImplementedException When the $attribute is not supported
-     * @throws MethodArgumentValueNotImplementedException When the $value is not supported
+     * @throws BadMethodCallException When the $attribute is not supported
+     * @throws BadMethodCallException When the $value is not supported
      */
     public function setAttribute(int $attribute, $value)
     {
@@ -561,7 +558,7 @@ abstract class CryptoFormatter
                 implode(', ', array_keys(self::$supportedAttributes))
             );
 
-            throw new MethodArgumentValueNotImplementedException(__METHOD__, 'attribute', $value, $message);
+            throw new BadMethodCallException($message, E_USER_ERROR);
         }
 
         if (self::$supportedAttributes['ROUNDING_MODE'] === $attribute && $this->isInvalidRoundingMode($value)) {
@@ -570,7 +567,7 @@ abstract class CryptoFormatter
                 implode(', ', array_keys(self::$roundingModes))
             );
 
-            throw new MethodArgumentValueNotImplementedException(__METHOD__, 'attribute', $value, $message);
+            throw new BadMethodCallException($message, E_USER_ERROR);
         }
 
         if (self::$supportedAttributes['GROUPING_USED'] === $attribute) {
@@ -599,11 +596,11 @@ abstract class CryptoFormatter
      * @see https://php.net/numberformatter.setpattern
      * @see http://www.icu-project.org/apiref/icu4c/classDecimalFormat.html#_details
      *
-     * @throws MethodNotImplementedException
+     * @throws BadMethodCallException
      */
     public function setPattern(string $pattern)
     {
-        throw new MethodNotImplementedException(__METHOD__);
+        throw new BadMethodCallException('MethodNotImplementedException');
     }
 
     /**
@@ -613,11 +610,11 @@ abstract class CryptoFormatter
      *
      * @see https://php.net/numberformatter.setsymbol
      *
-     * @throws MethodNotImplementedException
+     * @throws BadMethodCallException
      */
     public function setSymbol(int $symbol, string $value)
     {
-        throw new MethodNotImplementedException(__METHOD__);
+        throw new BadMethodCallException('MethodNotImplementedException');
     }
 
     /**
@@ -627,11 +624,11 @@ abstract class CryptoFormatter
      *
      * @see https://php.net/numberformatter.settextattribute
      *
-     * @throws MethodNotImplementedException
+     * @throws BadMethodCallException
      */
     public function setTextAttribute(int $attribute, string $value)
     {
-        throw new MethodNotImplementedException(__METHOD__);
+        throw new BadMethodCallException('MethodNotImplementedException');
     }
 
     /**
@@ -639,9 +636,8 @@ abstract class CryptoFormatter
      */
     protected function resetError()
     {
-        Icu::setError(Icu::U_ZERO_ERROR);
-        $this->errorCode = Icu::getErrorCode();
-        $this->errorMessage = Icu::getErrorMessage();
+        $this->errorCode = 0;
+        $this->errorMessage = '';
     }
 
     /**

@@ -1,10 +1,11 @@
-Symfony Polyfill / Intl: ICU Addition for CryptoCurrencies
-----------------------------------------------------------
+TnetDev Intl Crypto: Number/CurrencyFormatter for CryptoCurrencies
+------------------------------------------------------------------
 
 This package adds crypto currencies to the currency formatter.
 It is limited to the "en" locale and to:
 
 - [`NumberFormatter`](https://php.net/NumberFormatter)
+- [`NumberFormatter::formatCurrency`](https://php.net/manual/numberformatter.formatcurrency.php)
 
 ## License
 
