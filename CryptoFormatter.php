@@ -646,7 +646,7 @@ class CryptoFormatter
      * @see http://en.wikipedia.org/wiki/Swedish_rounding
      * @see http://www.docjar.com/html/api/com/ibm/icu/util/Currency.java.html#1007
      */
-    private function roundCurrency(float $value, string $currency): float
+    public function roundCurrency(float $value, string $currency): float
     {
         $fractionDigits = Currencies::getFractionDigits($currency);
         $roundingIncrement = Currencies::getRoundingIncrement($currency);
@@ -670,7 +670,7 @@ class CryptoFormatter
      *
      * @return int|float The rounded value
      */
-    private function round($value, int $precision)
+    public function round($value, int $precision)
     {
         $precision = $this->getUninitializedPrecision($value, $precision);
 
